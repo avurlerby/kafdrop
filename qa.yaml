@@ -1,0 +1,31 @@
+ingress:
+  enabled: true
+  annotations:
+    external-dns.alpha.kubernetes.io/hostname: kafka.qa.arca-payments.network
+    kubernetes.io/ingress.class: traefik-ssl
+  hosts:
+    - kafka.qa.arca-payments.network
+
+config:
+  hosts:
+   - host: https://vpc-switch-arca-qa-4xsbjathorq2zvzgs2uwqlj54m.eu-west-1.es.amazonaws.com
+     name: qa
+
+resources:
+  limits:
+    cpu: 100m
+    memory: 500Mi
+  requests:
+    cpu: 100m
+    memory: 500Mi
+
+env:
+  AUTH_TYPE: "ldap"
+  LDAP_URL: "ldap://ad.qa.arca.services:389"
+  LDAP_BASE_DN: OU=Users,OU=arca,DC=arca,DC=corp
+  LDAP_METHOD: simple
+  LDAP_USER_TEMPLATE: '%s'
+  LDAP_GROUP_BASE_DN: OU=Users,OU=arca,DC=arca,DC=corp
+  LDAP_USER_ATTR: userPrincipalName
+  LDAP_USER_ATTR_TEMPLATE: '%s'
+  LDAP_GROUP: memberOf=CN=DevOps,OU=Users,OU=arca,DC=arca,DC=corp

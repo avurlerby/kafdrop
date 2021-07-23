@@ -1,0 +1,31 @@
+ingress:
+  enabled: true
+  annotations:
+    external-dns.alpha.kubernetes.io/hostname: kafka.arca-pos.com
+    kubernetes.io/ingress.class: traefik-ssl
+  hosts:
+    - kafka.arca-pos.com
+
+config:
+  hosts:
+   - host: https://vpc-switch-arca-prod-syrzp7cflkbjjt4xjah2wcvtoi.eu-west-1.es.amazonaws.com
+     name: prod
+
+resources:
+  limits:
+    cpu: 100m
+    memory: 500Mi
+  requests:
+    cpu: 100m
+    memory: 500Mi
+
+env:
+  AUTH_TYPE: "ldap"
+  LDAP_URL: "ldap://ad.prod.arca.services:3268"
+  LDAP_BASE_DN: OU=Users,OU=arca,DC=arca,DC=corp
+  LDAP_METHOD: simple
+  LDAP_USER_TEMPLATE: '%s'
+  LDAP_GROUP_BASE_DN: OU=Users,OU=arca,DC=arca,DC=corp
+  LDAP_USER_ATTR: userPrincipalName
+  LDAP_USER_ATTR_TEMPLATE: '%s'
+  LDAP_GROUP: memberOf=CN=DevOps,OU=Users,OU=arca,DC=arca,DC=corp
